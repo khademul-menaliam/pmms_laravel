@@ -59,6 +59,35 @@
         </article>
     </section>
 
+    <section class="panel">
+        <div class="category-quick-access">
+            <div class="category-group">
+                <h4>Income Categories</h4>
+                <div class="category-chips">
+                    @forelse($categories->get('income', []) as $category)
+                        <a href="{{ route('incomes.index', ['category_id' => $category->id]) }}" class="category-chip" style="--chip-color: {{ $category->color }}">
+                            {{ $category->name }}
+                        </a>
+                    @empty
+                        <p class="empty-state">No income categories defined.</p>
+                    @endforelse
+                </div>
+            </div>
+            <div class="category-group">
+                <h4>Expense Categories</h4>
+                <div class="category-chips">
+                    @forelse($categories->get('expense', []) as $category)
+                        <a href="{{ route('expenses.index', ['category_id' => $category->id]) }}" class="category-chip" style="--chip-color: {{ $category->color }}">
+                            {{ $category->name }}
+                        </a>
+                    @empty
+                        <p class="empty-state">No expense categories defined.</p>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="two-column">
         <article class="panel">
             <div class="section-head">

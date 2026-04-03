@@ -26,7 +26,10 @@ trait BelongsToUser
     public function scopeOwnedBy(Builder $query, User|int|null $user = null): Builder
     {
         $userId = $user instanceof User ? $user->getKey() : $user;
-        $userId ??= auth()->id();
+        
+        if (! $userId && auth()->check()) {
+            $userId = session('impersonated_user_id') ?: auth()->id();
+        }
 
         return $query->where('user_id', $userId);
     }
@@ -38,7 +41,8 @@ trait BelongsToUser
         $query->where($field, $value);
 
         if (auth()->check()) {
-            $query->where('user_id', auth()->id());
+            $userId = session('impersonated_user_id') ?: auth()->id();
+            $query->where('user_id', $userId);
         }
 
         return $query;

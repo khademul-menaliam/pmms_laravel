@@ -171,6 +171,7 @@ class IncomeController extends Controller
                     ->where('user_id', $request->user()->id)),
             ],
             'amount' => ['required', 'numeric', 'min:0.01'],
+            'reference' => ['nullable', 'string', 'max:255'],
             'status' => ['required', Rule::in(array_keys(Income::STATUSES))],
             'received_by' => ['nullable', 'string', 'max:50'],
             'received_from' => ['nullable', 'string', 'max:120'],

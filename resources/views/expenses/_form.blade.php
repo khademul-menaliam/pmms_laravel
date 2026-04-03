@@ -51,6 +51,11 @@
     </label>
 
     <label class="field field-full">
+        <span>Reference / Message</span>
+        <input type="text" name="reference" value="{{ old('reference', $expense->reference) }}" placeholder="Short reference or message">
+    </label>
+
+    <label class="field field-full">
         <span>Notes</span>
         <textarea name="notes" rows="4">{{ old('notes', $expense->notes) }}</textarea>
     </label>

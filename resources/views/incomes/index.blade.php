@@ -62,6 +62,7 @@
                     <tr>
                         <th>Source</th>
                         <th>Amount</th>
+                        <th>Reference</th>
                         <th>Status</th>
                         <th>Received By</th>
                         <th>From</th>
@@ -74,6 +75,7 @@
                         <tr>
                             <td>{{ $income->category?->name }}</td>
                             <td>৳{{ number_format($income->amount, 2) }}</td>
+                            <td>{{ $income->reference ?: '—' }}</td>
                             <td><span class="status status-{{ $income->status }}">{{ ucfirst($income->status) }}</span></td>
                             <td>{{ \App\Models\Income::RECEIVED_BY_OPTIONS[$income->received_by] ?? '—' }}</td>
                             <td>{{ $income->received_from ?: '—' }}</td>
@@ -99,7 +101,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="empty-state">No income records found.</td>
+                            <td colspan="8" class="empty-state">No income records found.</td>
                         </tr>
                     @endforelse
                 </tbody>

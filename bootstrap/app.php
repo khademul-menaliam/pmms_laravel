@@ -11,7 +11,16 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\IsSuperAdmin::class,
+            'check_blocked' => \App\Http\Middleware\BlockUser::class,
+            'restrict_edits' => \App\Http\Middleware\RestrictImpersonationEdits::class,
+        ]);
+
+        $middleware->appendToGroup('web', [
+            \App\Http\Middleware\BlockUser::class,
+            \App\Http\Middleware\RestrictImpersonationEdits::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

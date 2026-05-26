@@ -75,6 +75,27 @@ code {
     flex-direction: column;
     gap: 32px;
     border-right: 1px solid rgba(255, 255, 255, 0.03);
+    position: relative;
+}
+
+.sidebar-close {
+    display: none;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(9, 13, 22, 0.45);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 45;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .brand {
@@ -1105,9 +1126,85 @@ code {
         transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 50;
         box-shadow: 20px 0 30px rgba(0,0,0,0.1);
+        padding: 20px 16px;
+        gap: 20px;
+        overflow-y: auto;
     }
     .sidebar.open {
         transform: translateX(0);
+    }
+    .sidebar-close {
+        display: block;
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        background: transparent;
+        border: none;
+        color: #94a3b8;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 6px;
+    }
+    .sidebar-close:hover {
+        color: white;
+        background: rgba(255, 255, 255, 0.05);
+    }
+    .sidebar-close svg {
+        width: 18px;
+        height: 18px;
+        display: block;
+    }
+    .brand {
+        gap: 8px;
+        padding-right: 24px;
+    }
+    .brand-mark {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+    .brand-mark svg {
+        width: 18px;
+        height: 18px;
+    }
+    .brand strong {
+        font-size: 14px;
+    }
+    .sidebar-user {
+        padding: 10px 12px;
+        gap: 8px;
+        border-radius: 10px;
+    }
+    .user-avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+    }
+    .user-info strong {
+        font-size: 12px;
+    }
+    .user-info span {
+        font-size: 10.5px;
+        max-width: 140px;
+    }
+    .user-info small {
+        font-size: 8.5px;
+    }
+    .sidebar-nav {
+        gap: 4px;
+    }
+    .nav-link {
+        padding: 8px 10px;
+        font-size: 12.5px;
+        gap: 8px;
+        border-radius: 8px;
+    }
+    .nav-icon-svg {
+        width: 16px;
+        height: 16px;
+    }
+    .sidebar-foot {
+        font-size: 10px;
     }
     .menu-toggle {
         display: inline-flex;

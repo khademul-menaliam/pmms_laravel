@@ -1,10 +1,28 @@
 const navToggle = document.querySelector('[data-nav-toggle]');
 const navPanel = document.querySelector('[data-nav-panel]');
+const navOverlay = document.querySelector('[data-nav-overlay]');
+const navClose = document.querySelector('[data-nav-close]');
+
+const toggleMenu = () => {
+    navPanel.classList.toggle('open');
+    if (navOverlay) navOverlay.classList.toggle('active');
+};
+
+const closeMenu = () => {
+    navPanel.classList.remove('open');
+    if (navOverlay) navOverlay.classList.remove('active');
+};
 
 if (navToggle && navPanel) {
-    navToggle.addEventListener('click', () => {
-        navPanel.classList.toggle('open');
-    });
+    navToggle.addEventListener('click', toggleMenu);
+}
+
+if (navOverlay) {
+    navOverlay.addEventListener('click', closeMenu);
+}
+
+if (navClose) {
+    navClose.addEventListener('click', closeMenu);
 }
 
 document.querySelectorAll('[data-line-chart]').forEach((canvas) => {

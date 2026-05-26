@@ -68,6 +68,10 @@
 
     <div class="app-shell">
         <aside class="sidebar" data-nav-panel>
+            <button class="sidebar-close" type="button" data-nav-close aria-label="Close menu">
+                <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+            </button>
+
             <div class="brand">
                 <div class="brand-mark">
                     <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-1.971-.659-1.171-.88-1.171-2.303 0-3.182 1.171-.879 3.07-.879 4.242 0 .28.21.503.48.66.777m-3.22-.777a11.05 11.05 0 0 0-3.478 2.404M12 3v1m0 16v1m9-9e-10c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Z"/></svg>
@@ -123,6 +127,7 @@
                 <span>PMMS Finance workspace</span>
             </div>
         </aside>
+        <div class="sidebar-overlay" data-nav-overlay></div>
 
         <div class="main-shell">
             @if (session()->has('impersonated_user_id'))

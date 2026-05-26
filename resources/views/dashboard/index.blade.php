@@ -4,62 +4,105 @@
 @section('page-title', 'Financial cockpit')
 
 @section('content')
-    <section class="hero-card">
-        <div>
-            <p class="eyebrow">Money at a glance</p>
-            <h2>See cash flow, loans, and reminders in one lightweight Laravel dashboard.</h2>
-            <p class="muted">Track income, expenses, receivables, payables, and upcoming due dates without leaving the page.</p>
+    <div class="welcome-panel">
+        <div class="welcome-copy">
+            <span class="eyebrow">Cockpit</span>
+            <h2>Welcome back, <strong>{{ auth()->user()->name }}</strong></h2>
+            <p class="muted">Here's your comprehensive financial cashflow and loan tracker overview for today.</p>
         </div>
-        <div class="hero-actions">
-            <a href="{{ route('reports.index') }}" class="btn btn-primary">Open reports</a>
-            <a href="{{ route('reminders.create') }}" class="btn btn-soft">Add reminder</a>
+        <div class="welcome-actions">
+            <a href="{{ route('reports.index') }}" class="btn btn-soft">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-4 h-4 mr-2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z"/></svg>
+                <span>Analytics Reports</span>
+            </a>
+            <a href="{{ route('expenses.create') }}" class="btn btn-primary">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-4 h-4 mr-2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                <span>Add Expense</span>
+            </a>
         </div>
-    </section>
+    </div>
 
     <section class="stats-grid">
+        <!-- Card 1: Net cash balance -->
         <article class="stat-card balance">
-            <span>Current Balance</span>
+            <div class="stat-header">
+                <span>Net Available Funds</span>
+                <span class="stat-icon">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6A2.25 2.25 0 0 1 18.75 20H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 9m18 0V6a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6v3"/></svg>
+                </span>
+            </div>
             <strong>৳{{ number_format($stats['current_balance'], 2) }}</strong>
-            <small>Real cash after loans in/out</small>
+            <small>Actual cash liquid reserve after loan payouts</small>
         </article>
+
+        <!-- Card 2: Income -->
         <article class="stat-card">
-            <span>Total Income</span>
+            <div class="stat-header">
+                <span>Total Inflow</span>
+                <span class="stat-icon inflow">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 4.5l-15 15m0 0h11.25m-11.25 0V8.25"/></svg>
+                </span>
+            </div>
             <strong>৳{{ number_format($stats['total_income'], 2) }}</strong>
-            <small>Paid income only</small>
+            <div class="stat-sub-grid">
+                <div>
+                    <span>Received (Paid)</span>
+                    <strong>৳{{ number_format($stats['total_income'], 2) }}</strong>
+                </div>
+                <div>
+                    <span>Awaiting (Pending)</span>
+                    <strong>৳{{ number_format($stats['pending_income'], 2) }}</strong>
+                </div>
+            </div>
         </article>
+
+        <!-- Card 3: Expenses -->
         <article class="stat-card">
-            <span>Total Expenses</span>
+            <div class="stat-header">
+                <span>Total Outflow</span>
+                <span class="stat-icon outflow">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+                </span>
+            </div>
             <strong>৳{{ number_format($stats['total_expenses'], 2) }}</strong>
-            <small>Paid expenses only</small>
+            <div class="stat-sub-grid">
+                <div>
+                    <span>Paid (Outflow)</span>
+                    <strong>৳{{ number_format($stats['total_expenses'], 2) }}</strong>
+                </div>
+                <div>
+                    <span>Due (Pending)</span>
+                    <strong>৳{{ number_format($stats['pending_expense'], 2) }}</strong>
+                </div>
+            </div>
         </article>
-        <article class="stat-card">
-            <span>Total Given</span>
-            <strong>৳{{ number_format($stats['total_given'], 2) }}</strong>
-            <small>Money lent to others</small>
-        </article>
-        <article class="stat-card">
-            <span>Total Taken</span>
-            <strong>৳{{ number_format($stats['total_taken'], 2) }}</strong>
-            <small>Borrowed money</small>
-        </article>
-        <article class="stat-card">
-            <span>Pending Receivables</span>
-            <strong>৳{{ number_format($stats['pending_receivables'], 2) }}</strong>
-            <small>Expected collections</small>
-        </article>
-        <article class="stat-card">
-            <span>Pending Payables</span>
-            <strong>৳{{ number_format($stats['pending_payables'], 2) }}</strong>
-            <small>Upcoming returns</small>
-        </article>
-        <article class="stat-card">
-            <span>Pending Income / Expense</span>
-            <strong>৳{{ number_format($stats['pending_income'], 2) }} / ৳{{ number_format($stats['pending_expense'], 2) }}</strong>
-            <small>Expected inflow vs due outflow</small>
+
+        <!-- Card 4: Loans -->
+        @php($netLoan = $stats['pending_receivables'] - $stats['pending_payables'])
+        <article @class(['stat-card', 'loan-positive' => $netLoan >= 0, 'loan-negative' => $netLoan < 0])>
+            <div class="stat-header">
+                <span>Net Outstanding Loans</span>
+                <span class="stat-icon loan">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3-3m0 0 3-3m-3 3h12.75A6.75 6.75 0 0 0 21 14.25 6.75 6.75 0 0 0 14.25 7.5H3"/></svg>
+                </span>
+            </div>
+            <strong>
+                {{ $netLoan >= 0 ? '+' : '' }}৳{{ number_format($netLoan, 2) }}
+            </strong>
+            <div class="stat-sub-grid">
+                <div>
+                    <span>Lent (Receivable)</span>
+                    <strong>৳{{ number_format($stats['pending_receivables'], 2) }}</strong>
+                </div>
+                <div>
+                    <span>Borrowed (Payable)</span>
+                    <strong>৳{{ number_format($stats['pending_payables'], 2) }}</strong>
+                </div>
+            </div>
         </article>
     </section>
 
-    <section class="panel">
+    <section class="panel quick-access-panel">
         <div class="category-quick-access">
             <div class="category-group">
                 <h4>Income Categories</h4>
@@ -92,19 +135,21 @@
         <article class="panel">
             <div class="section-head">
                 <div>
-                    <p class="eyebrow">Monthly trend</p>
-                    <h3>Income vs expense</h3>
+                    <p class="eyebrow">Monthly Trend</p>
+                    <h3>Income vs Expense</h3>
                 </div>
-                <span class="badge badge-info">Last 6 months</span>
+                <span class="badge badge-info">Last 6 Months</span>
             </div>
-            <canvas class="chart-canvas" data-line-chart='@json($monthlyTrend)'></canvas>
+            <div class="chart-wrapper">
+                <canvas class="chart-canvas" data-line-chart='@json($monthlyTrend)'></canvas>
+            </div>
         </article>
 
         <article class="panel">
             <div class="section-head">
                 <div>
-                    <p class="eyebrow">Spend mix</p>
-                    <h3>Category wise expense chart</h3>
+                    <p class="eyebrow">Spend Mix</p>
+                    <h3>Category-wise Expenses</h3>
                 </div>
             </div>
             @php($maxExpense = max($expenseBreakdown->max('total') ?? 1, 1))
@@ -130,8 +175,8 @@
         <article class="panel">
             <div class="section-head">
                 <div>
-                    <p class="eyebrow">Recent activity</p>
-                    <h3>Last 10 transactions</h3>
+                    <p class="eyebrow">Recent Activity</p>
+                    <h3>Last 10 Transactions</h3>
                 </div>
             </div>
             <div class="table-wrap">
@@ -149,10 +194,19 @@
                     <tbody>
                         @forelse ($recentTransactions as $item)
                             <tr>
-                                <td><span class="badge">{{ $item['type'] }}</span></td>
-                                <td><a href="{{ $item['route'] }}">{{ $item['title'] }}</a></td>
+                                <td>
+                                    <span @class([
+                                        'badge',
+                                        'badge-inflow' => $item['type'] === 'Income',
+                                        'badge-outflow' => $item['type'] === 'Expense',
+                                        'badge-loan' => in_array($item['type'], ['Given', 'Taken']),
+                                    ])>
+                                        {{ $item['type'] }}
+                                    </span>
+                                </td>
+                                <td><a class="transaction-link" href="{{ $item['route'] }}">{{ $item['title'] }}</a></td>
                                 <td>{{ $item['person'] }}</td>
-                                <td>৳{{ number_format($item['amount'], 2) }}</td>
+                                <td class="amount-cell">৳{{ number_format($item['amount'], 2) }}</td>
                                 <td>{{ optional($item['date'])->format('d M Y') }}</td>
                                 <td><span class="status status-{{ $item['status'] }}">{{ ucfirst($item['status']) }}</span></td>
                             </tr>
@@ -169,26 +223,30 @@
         <article class="panel">
             <div class="section-head">
                 <div>
-                    <p class="eyebrow">Upcoming reminders</p>
-                    <h3>Collect, pay, and follow up on time</h3>
+                    <p class="eyebrow">Upcoming Reminders</p>
+                    <h3>Overdue & Upcoming Actions</h3>
                 </div>
-                <a href="{{ route('reminders.index') }}" class="btn btn-soft">Manage reminders</a>
+                <a href="{{ route('reminders.index') }}" class="btn btn-soft">Manage</a>
             </div>
             <div class="reminder-list">
                 @forelse ($upcomingReminders as $item)
                     <a href="{{ $item['route'] }}" class="reminder-card">
-                        <div>
+                        <div class="reminder-info">
                             <strong>{{ $item['title'] }}</strong>
                             <p>{{ $item['note'] ?: 'No extra note added.' }}</p>
-                            <small class="muted">Open source record</small>
                         </div>
                         <div class="reminder-meta">
                             @if (! is_null($item['amount']))
-                                <span>৳{{ number_format($item['amount'], 2) }}</span>
+                                <span class="reminder-amount">৳{{ number_format($item['amount'], 2) }}</span>
                             @endif
-                            <small>
-                                {{ $item['days_left'] < 0 ? abs($item['days_left']).' day(s) overdue' : ($item['days_left'] === 0 ? 'Due today' : 'Due in '.$item['days_left'].' day(s)') }}
-                            </small>
+                            <span @class([
+                                'reminder-due-tag',
+                                'due-overdue' => $item['days_left'] < 0,
+                                'due-today' => $item['days_left'] === 0,
+                                'due-upcoming' => $item['days_left'] > 0,
+                            ])>
+                                {{ $item['days_left'] < 0 ? abs($item['days_left']).'d overdue' : ($item['days_left'] === 0 ? 'Today' : 'in '.$item['days_left'].'d') }}
+                            </span>
                         </div>
                     </a>
                 @empty
@@ -198,3 +256,4 @@
         </article>
     </section>
 @endsection
+

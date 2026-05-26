@@ -240,6 +240,8 @@ code {
     display: flex;
     flex-direction: column;
     max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
 }
 
 /* Topbar Header */
@@ -377,6 +379,13 @@ code {
     place-items: center;
     background: #f8fafc;
     color: var(--muted);
+}
+
+.stat-icon svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+    flex-shrink: 0;
 }
 
 .stat-icon.inflow {
@@ -867,9 +876,23 @@ code {
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
+    gap: 6px;
 }
 
 .btn svg {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.welcome-actions svg {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0;
     flex-shrink: 0;
 }
 
@@ -1089,6 +1112,12 @@ code {
     .menu-toggle {
         display: inline-flex;
     }
+    .menu-toggle svg {
+        width: 20px;
+        height: 20px;
+        display: block;
+        flex-shrink: 0;
+    }
     .topbar, .content {
         padding-left: 24px;
         padding-right: 24px;
@@ -1102,25 +1131,40 @@ code {
         align-items: flex-start;
         padding: 24px;
     }
+    .welcome-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
     .auth-shell {
         grid-template-columns: 1fr;
         gap: 32px;
     }
 }
 
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    .stat-sub-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    .topbar-actions {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
+
 @media (max-width: 640px) {
-    .stats-grid, .form-grid, .filter-grid, .category-quick-access {
+    .form-grid, .filter-grid, .category-quick-access {
         grid-template-columns: 1fr;
     }
     .topbar {
         flex-direction: column;
         align-items: stretch;
         gap: 16px;
-    }
-    .topbar-actions {
-        width: 100%;
-        justify-content: flex-start;
-        flex-wrap: wrap;
     }
     .content {
         padding: 20px 16px;

@@ -128,6 +128,7 @@ class DashboardController extends Controller
             ->values();
 
         $upcomingReminders = ReminderCenter::upcoming($user)->take(8)->values();
+        $categories = $user->categories()->get()->groupBy('type');
 
         return view('dashboard.index', [
             'stats' => [
@@ -145,6 +146,7 @@ class DashboardController extends Controller
             'expenseBreakdown' => $expenseBreakdown,
             'recentTransactions' => $recentTransactions,
             'upcomingReminders' => $upcomingReminders,
+            'categories' => $categories,
         ]);
     }
 }

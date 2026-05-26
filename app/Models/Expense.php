@@ -29,6 +29,7 @@ class Expense extends Model
         'user_id',
         'category_id',
         'amount',
+        'reference',
         'status',
         'paid_via',
         'paid_to',

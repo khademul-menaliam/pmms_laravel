@@ -62,6 +62,7 @@
                     <tr>
                         <th>Category</th>
                         <th>Amount</th>
+                        <th>Reference</th>
                         <th>Status</th>
                         <th>Paid Via</th>
                         <th>Paid To</th>
@@ -74,6 +75,7 @@
                         <tr>
                             <td>{{ $expense->category?->name }}</td>
                             <td>৳{{ number_format($expense->amount, 2) }}</td>
+                            <td>{{ $expense->reference ?: '—' }}</td>
                             <td><span class="status status-{{ $expense->status }}">{{ ucfirst($expense->status) }}</span></td>
                             <td>{{ \App\Models\Expense::PAYMENT_OPTIONS[$expense->paid_via] ?? '—' }}</td>
                             <td>{{ $expense->paid_to ?: '—' }}</td>
@@ -99,7 +101,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="empty-state">No expense records found.</td>
+                            <td colspan="8" class="empty-state">No expense records found.</td>
                         </tr>
                     @endforelse
                 </tbody>

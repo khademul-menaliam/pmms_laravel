@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\TakenLoanController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,4 +62,14 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/backup/export', [BackupController::class, 'export'])->name('backup.export');
     Route::post('/backup/import', [BackupController::class, 'import'])->name('backup.import');
     Route::get('/backup/files/{file}', [BackupController::class, 'download'])->name('backup.download');
+
+    Route::middleware('admin')->prefix('admin')->name('admin.')->group(function (): void {
+        Route::get('/users', [SuperAdminController::class, 'index'])->name('users.index');
+        Route::patch('/users/{user}/block', [SuperAdminController::class, 'block'])->name('users.block');
+        Route::patch('/users/{user}/unblock', [SuperAdminController::class, 'unblock'])->name('users.unblock');
+        Route::delete('/users/{user}', [SuperAdminController::class, 'destroy'])->name('users.destroy');
+        Route::post('/users/{user}/impersonate', [SuperAdminController::class, 'impersonate'])->name('users.impersonate');
+    });
+
+    Route::post('/admin/stop-impersonating', [SuperAdminController::class, 'stopImpersonating'])->name('admin.stop-impersonating');
 });

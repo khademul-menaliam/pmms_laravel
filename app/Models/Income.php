@@ -35,6 +35,7 @@ class Income extends Model
         'user_id',
         'category_id',
         'amount',
+        'reference',
         'status',
         'received_by',
         'received_from',

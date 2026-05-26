@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -38,6 +39,14 @@ class AuthController extends Controller
                 ->onlyInput('email');
         }
 
+        $user = Auth::user();
+        /** @var \App\Models\User $user */
+        $user->update([
+            'last_login_at' => now(),
+            'last_login_ip' => $request->ip(),
+        ]);
+
+        $request->session()->forget('impersonated_user_id');
         $request->session()->regenerate();
 
         return redirect()
@@ -66,6 +75,24 @@ class AuthController extends Controller
             'phone' => $data['phone'] ?: null,
             'currency' => strtoupper($data['currency']),
             'password' => $data['password'],
+        ]);
+
+        Category::create([
+            'user_id' => $user->id,
+            'name' => 'General',
+            'type' => 'income',
+            'color' => '#64748b',
+            'is_default' => true,
+            'slug' => 'general-income',
+        ]);
+
+        Category::create([
+            'user_id' => $user->id,
+            'name' => 'General',
+            'type' => 'expense',
+            'color' => '#64748b',
+            'is_default' => true,
+            'slug' => 'general-expense',
         ]);
 
         Auth::login($user);

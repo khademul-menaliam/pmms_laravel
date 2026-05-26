@@ -26,6 +26,10 @@ class User extends Authenticatable
         'phone',
         'currency',
         'password',
+        'is_superadmin',
+        'is_blocked',
+        'last_login_at',
+        'last_login_ip',
     ];
 
     /**
@@ -48,6 +52,9 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_superadmin' => 'boolean',
+            'is_blocked' => 'boolean',
+            'last_login_at' => 'datetime',
         ];
     }
 
